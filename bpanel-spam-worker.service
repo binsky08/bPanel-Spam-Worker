@@ -1,0 +1,13 @@
+[Unit]
+Description=bPanel SpamWorker is a custom sa-learn background worker
+After=network.target spamassassin.service
+
+[Service]
+Type=simple
+User=www-data
+ExecStart=/usr/bin/python3 /opt/bpanel/spamWorker/bPanelSpamWorkerServer.py
+TimeoutStopSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
