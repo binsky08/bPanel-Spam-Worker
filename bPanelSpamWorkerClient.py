@@ -9,7 +9,7 @@ if (sys.version_info < (3, 0)):
 user = ""
 fileName = ""
 reportType = "spam"
-spamSocket = "/tmp/bpanel-sa-learn-spam"
+spamSocket = "/var/run/bpanel/bpanel-spam-worker.sock"
 
 def printHelp():
     print('Usage: python3 client.py --spam --user <username> --file <filepath>')
@@ -19,6 +19,7 @@ def printHelp():
     print('-s --socket <filepath>          : Path to the socket in the filesystem')
     print('-S --spam                       : Report as spam (default if no --spam or --ham is defined)')
     print('-H --ham                        : Report as ham')
+    print('-h --help                       : Print this help text')
 
 def parseInputArgs():
     global user
