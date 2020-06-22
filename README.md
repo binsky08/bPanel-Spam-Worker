@@ -12,7 +12,8 @@ bPanel SpamWorker is a custom sa-learn background worker
 cd /opt/bpanel
 git clone https://git.binsky.org/binsky/bPanelSpamWorker.git spamWorker
 cp ./spamWorker/bpanel-spam-worker.service /lib/systemd/system/
-chown www-data /opt/bpanel/spamWorker
+mkdir -p /var/run/bpanel
+chown www-data /opt/bpanel/spamWorker /var/run/bpanel
 systemctl enable bpanel-spam-worker
 systemctl start bpanel-spam-worker
 ```
