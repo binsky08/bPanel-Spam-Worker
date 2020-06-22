@@ -12,6 +12,7 @@ from _thread import start_new_thread as listen_spam_thread
 from _thread import start_new_thread as sa_worker_thread
 
 verbose = False
+dryRun = False
 thread_stop_requested = False
 listen_spam_thread_running = False
 sa_worker_thread_running = False
@@ -94,7 +95,7 @@ def saWorker():
                 lastElement = workerList.pop(0)
                 if verbose:
                     print("Last processed element: ", lastElement)
-            if lastElement is not None:
+            if lastElement is not None and not dryRun:
                 reportType = 'spam'
                 if lastElement['reportType'] == 'ham':
                     reportType = 'ham'
@@ -170,6 +171,7 @@ def printHelp():
     print('-s --socket <filepath>          : Path to the socket in the filesystem')
     print('-c --cache-folder <filepath>    : Path to the cache folder in the filesystem')
     print('-n --no-cache                   : Disable persistent filesystem cache (not recommended!)')
+    print('-d --dry-run                    : Prevent the execution of sa-learn')
     print('-v --verbose                    : Enable server status messages (use only for debugging!)')
     print('-h --help                       : Print this help text')
 
@@ -178,7 +180,7 @@ if __name__ == '__main__':
     signal.signal(signal.SIGTERM, signal_handler)
     
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"hvnc:s:",["socket=","cache-folder=","no-cache","verbose","help"])
+        opts, args = getopt.getopt(sys.argv[1:],"dhvnc:s:",["socket=","cache-folder=","no-cache","dry-run","verbose","help"])
     except getopt.GetoptError:
         printHelp()
         sys.exit(2)
@@ -195,6 +197,8 @@ if __name__ == '__main__':
                 cacheFolder = str(arg)
         elif opt in ("-n", "--no-cache"):
             enableCache = False
+        elif opt in ("-d", "--dry-run"):
+            dryRun = True
         elif opt in ("-v", "--verbose"):
             verbose = True
     
