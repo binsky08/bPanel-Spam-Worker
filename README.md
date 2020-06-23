@@ -16,6 +16,7 @@ mkdir -p /var/run/bpanel
 chown www-data /opt/bpanel/spamWorker /var/run/bpanel
 systemctl enable bpanel-spam-worker
 systemctl start bpanel-spam-worker
+sed -e '/unlink($tmpfname);/ s=^/*=//=' -i /var/lib/roundcube/plugins/markasjunk2/drivers/cmd_learn.php
 ```
 
 Edit these three lines in `/var/lib/roundcube/plugins/markasjunk2/config.inc.php`
