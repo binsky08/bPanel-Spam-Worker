@@ -109,6 +109,14 @@ def saWorker():
                     if verbose:
                         print('sa-learn command timed out after 45 seconds')
                     p.kill()    #not needed; just to be sure
+                
+                filename = lastElement['fileName'].replace("'","")
+                if os.path.exists(filename):
+                    try:
+                        os.remove(filename)
+                    except:
+                        if verbose:
+                            print('Failure while removing', filename)
         time.sleep(1)
         
     saveWorkerListCache()
